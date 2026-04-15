@@ -29,33 +29,33 @@ export const createGround = async (req, res) => {
     if (groundExists.length != 0) {
       return res.send("Ground already exists");
     }
-    for (const time of availability) {
-      if (!time.start || !time.end) {
-        return res.status(400).send("Start and end times are required");
-      }
+    // for (const time of availability) {
+    //   if (!time.start || !time.end) {
+    //     return res.status(400).send("Start and end times are required");
+    //   }
 
-      const start = time.start.trim();
-      const end = time.end.trim();
+    //   const start = time.start.trim();
+    //   const end = time.end.trim();
 
-      if (toMinutes(start) > toMinutes(end)) {
-        for (const photo of image) {
-          const url = new URL(photo);
-          const key = url.pathname.substring(1);
+    //   if (toMinutes(start) > toMinutes(end)) {
+    //     for (const photo of image) {
+    //       const url = new URL(photo);
+    //       const key = url.pathname.substring(1);
 
-          const params = {
-            Bucket: "futsal-pics",
-            Key: key,
-          };
-          try {
-            const command = new DeleteObjectCommand(params);
-            const response = await s3.send(command);
-          } catch (err) {
-            console.error("Error deleting object:", err);
-          }
-        }
-        return res.status(400).send(`Invalid time range: ${start} - ${end}`);
-      }
-    }
+    //       const params = {
+    //         Bucket: "futsal-pics",
+    //         Key: key,
+    //       };
+    //       try {
+    //         const command = new DeleteObjectCommand(params);
+    //         const response = await s3.send(command);
+    //       } catch (err) {
+    //         console.error("Error deleting object:", err);
+    //       }
+    //     }
+    //     return res.status(400).send(`Invalid time range: ${start} - ${end}`);
+    //   }
+    // }
     const admin = await Admin.findOne({ email: req.admin.email });
     const createGround = await Ground.create({
       name: name,
