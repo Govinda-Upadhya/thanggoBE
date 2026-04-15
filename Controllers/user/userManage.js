@@ -15,6 +15,7 @@ const redis = new Redis({
 const upload = multer({ storage: multer.memoryStorage() });
 export const fetchGrounds = async (req, res) => {
   const grounds = await Ground.find({});
+  console.log("grounds info from fetch grounds",grounds);
   if (grounds.length == 0) {
     return res.status(404).send("No grounds available");
   }
